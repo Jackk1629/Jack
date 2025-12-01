@@ -1,0 +1,22 @@
+
+<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cerpen</title><link rel="stylesheet" href="assets/css/style.css"></head><body>
+<div class="container">
+  <div class="navbar"><div class="brand"><div class="logo">KS</div><div><h1>Cerpen</h1></div></div><div class="nav-links"><a href="index.html">Home</a><a href="login.html">Admin</a></div></div>
+  <div style="margin-top:18px"><h2>Cerpen</h2><div class="grid" id="list-area"></div></div>
+</div>
+<script src="assets/js/app.js"></script>
+<script>
+(function(){
+  const db = getDB().filter(w=> w.type === 'Cerpen');
+  const container = document.getElementById('list-area');
+  if(!container) return;
+  if(db.length===0){ container.innerHTML = '<p style="color:#9aa4b2">Belum ada karya di kategori ini.</p>'; return; }
+  container.innerHTML = db.map(function(w){ return '\
+    <div class="card">\
+      <h3>'+ escapeHtml(w.title) +'</h3>\
+      <p>'+ (w.author || '') +'</p>\
+      <div style="margin-top:12px"><a class="btn small" href="reader.html?id='+ w.id +'">Baca</a></div>\
+    </div>'; }).join('');
+})();
+</script>
+</body></html>
