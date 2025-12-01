@@ -1,32 +1,102 @@
+<!-- FILE: admin.html -->
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
 
-<!DOCTYPE html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Admin Dashboard</title><link rel="stylesheet" href="assets/css/style.css"></head><body>
+<body>
 <div class="container">
-  <div class="navbar"><div class="brand"><div class="logo">KS</div><div><h1>Dashboard</h1></div></div><div class="nav-links"><a class="inline-link" href="index.html">Home</a> <a class="inline-link" href="#" onclick="adminLogout()">Logout</a></div></div>
+
+  <div class="navbar">
+    <div class="brand"><div class="logo">KS</div><div><h1>Dashboard</h1></div></div>
+    <div class="nav-links">
+      <a class="inline-link" href="index.html">Home</a>
+      <a class="inline-link" href="#" onclick="adminLogout()">Logout</a>
+    </div>
+  </div>
+
   <div class="subpage">
     <h2>Admin — Kelola Karya</h2>
+
     <div class="admin-wrap">
+
       <form id="w-form">
         <input type="hidden" id="w-id">
-        <div class="form-row"><input id="w-title" class="input" placeholder="Judul"></div>
-        <div class="form-row"><input id="w-author" class="input" placeholder="Penulis (default Jakaria)"><select id="w-type" class="input" style="max-width:200px"><option>Cerpen</option><option>Puisi</option><option>Novel</option></select></div>
-        <div class="form-row"><textarea id="w-content" class="textarea" placeholder="Isi karya..."></textarea></div>
-        <div><button class="btn" type="submit">Simpan</button> <button type="button" class="btn" onclick="document.getElementById('w-form').reset()">Clear</button></div>
+
+        <div class="form-row">
+          <input id="w-title" class="input" placeholder="Judul">
+        </div>
+
+        <div class="form-row">
+          <input id="w-author" class="input" placeholder="Penulis (default Jakaria)">
+          <select id="w-type" class="input" style="max-width:200px">
+            <option>Cerpen</option>
+            <option>Puisi</option>
+            <option>Novel</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <textarea id="w-content" class="textarea" placeholder="Isi karya..."></textarea>
+        </div>
+
+        <div>
+          <button class="btn" type="submit">Simpan</button>
+          <button type="button" class="btn" onclick="document.getElementById('w-form').reset()">Clear</button>
+        </div>
       </form>
+
       <h3 style="margin-top:18px">Upload File Karya (TXT recommended)</h3>
       <input type="file" id="upload-file" class="input">
+
       <h3 style="margin-top:18px">Daftar Karya</h3>
       <div id="admin-list"></div>
+
       <h3>Import / Export</h3>
       <div style="display:flex;gap:8px">
         <button class="btn" onclick="downloadDB()">Export JSON</button>
         <input type="file" id="import-file" onchange="importDB(event)">
       </div>
+
     </div>
   </div>
+
 </div>
-<script src="assets/js/app.js"></script><script>adminInit();</script>
+
+<script src="assets/js/app.js"></script>
+<script>adminInit();</script>
+
 <script>
-function downloadDB(){ const data = localStorage.getItem('karya_db_v1') || '[]'; const blob = new Blob([data], {type:'application/json'}); const url = URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='karya-export.json'; a.click(); }
-function importDB(e){ const f=e.target.files[0]; if(!f) return; const reader=new FileReader(); reader.onload=function(){ try{ JSON.parse(reader.result); localStorage.setItem('karya_db_v1', reader.result); alert('Import sukses'); location.reload(); }catch(err){ alert('File tidak valid') } }; reader.readAsText(f); }
+function downloadDB(){ 
+  const data = localStorage.getItem('karya_db_v1') || '[]';
+  const blob = new Blob([data], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='karya-export.json';
+  a.click();
+}
+
+function importDB(e){ 
+  const f=e.target.files[0]; 
+  if(!f) return;
+
+  const reader=new FileReader(); 
+  reader.onload=function(){ 
+    try{ 
+      JSON.parse(reader.result); 
+      localStorage.setItem('karya_db_v1', reader.result);
+      alert('Import sukses'); 
+      location.reload(); 
+    }catch(err){ alert('File tidak valid') } 
+  };
+  reader.readAsText(f); 
+}
 </script>
-</body></html>
+
+</body>
+</html>
